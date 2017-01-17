@@ -7,7 +7,9 @@
 </head>
 <body>
 
-
+<!-- Keys with corresponding assignments -->
+<!-- Every value corresponds to a audio sample -->
+<!-- We are using the dat-key which can be any type of value we want -->
   <div class="keys">
     <div data-key="65" class="key">
       <kbd>A</kbd>
@@ -58,23 +60,34 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+    // this function removes the transition by trageting the class 'playing'
   function removeTransition(e) {
+    // if the event property name is not equal to transform then return
     if (e.propertyName !== 'transform') return;
+    // target the event and remove the class named 'playing'
     e.target.classList.remove('playing');
   }
-
+    // This function is what actually plays our sounds
   function playSound(e) {
+    // asking audio to look for the triggered event of of keycode to trigger audio
     const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+    // asking key to look for the triggered event of of keycode to trigger audio
     const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
+    // If there is no audio then dont do anything just come back
     if (!audio) return;
-
+    // if this is triggered add the CSS class of 'playing'
     key.classList.add('playing');
+    // when key is pressed always start the loop over at 0
     audio.currentTime = 0;
+    // last but not least play the sound
     audio.play();
   }
-
+    // make an array from all of the elements with .key
   const keys = Array.from(document.querySelectorAll('.key'));
+  // key will listen for the event of key - when it hits threshold of transition
+  // then remove transition
   keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+  // when a key is down then play the sound (that rhymes, yazz)
   window.addEventListener('keydown', playSound);
 </script>
 
