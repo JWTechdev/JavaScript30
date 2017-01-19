@@ -61,7 +61,9 @@
       background:black;
       position: absolute;
       top:50%;
+      /*Transofrm origin is how we get the transformation to start all the way from the right instead of the middle*/
       transform-origin: 100%;
+      /*this is making sure the hands turn in the right direction*/
       transform: rotate(90deg);
       transition: all 0.05s;
       transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
@@ -69,13 +71,18 @@
 </style>
 
 <script>
+// These are set of hand const that query the elemnts by class
   const secondHand = document.querySelector('.second-hand');
   const minsHand = document.querySelector('.min-hand');
   const hourHand = document.querySelector('.hour-hand');
 
   function setDate() {
+    //Dat is a new instance provided by JS that starts from Jan 1, 1970
     const now = new Date();
 
+    // These are utitlizing different default methods for time
+    // then they are converting the vlaues into useable math
+    // then we are using dot notation to utilize our new math to rotate the hands
     const seconds = now.getSeconds();
     const secondsDegrees = ((seconds / 60) * 360) + 90;
     secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
@@ -89,6 +96,7 @@
     hourHand.style.transform = `rotate(${hourDegrees}deg)`;
   }
 
+  // this is then where we set the interval for our function
   setInterval(setDate, 1000);
 
   setDate();
