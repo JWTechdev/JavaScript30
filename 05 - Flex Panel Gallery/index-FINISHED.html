@@ -21,6 +21,7 @@
       box-sizing: inherit;
     }
 
+    /*THIS IS OUR FLEX CONTAINER*/
     .panels {
       min-height:100vh;
       overflow: hidden;
@@ -42,9 +43,11 @@
       font-size: 20px;
       background-size:cover;
       background-position:center;
+      /*FILL ONE UNIT OF THE AVAILABLE SPACE BASED ON THE OTHER ITEMS NEXT TO IT*/
       flex: 1;
       justify-content: center;
       display: flex;
+      /*SO THAT THEY GO FROM LEFT TO RIGHT*/
       flex-direction: column;
     }
 
@@ -56,6 +59,7 @@
     .panel5 { background-image:url(https://source.unsplash.com/3MNzGlQM7qs/1500x1500); }
 
     /* Flex Items */
+    /* > * TRAGET THE THINGS THAT ARE WITHIN WITH THE CONTAINER*/
     .panel > * {
       margin:0;
       width: 100%;
@@ -80,7 +84,7 @@
     .panel p:nth-child(2) {
       font-size: 4em;
     }
-
+    /*THIS IS THE CLASS WE ARE GOING TO TARGET FOR OPENING INTERACTION*/
     .panel.open {
       flex: 5;
       font-size:40px;
@@ -93,8 +97,9 @@
 
   </style>
 
-
+  <!-- FLEX PARENT -->
   <div class="panels">
+    <!-- FLEX KIDS -->
     <div class="panel panel1">
       <p>Hey</p>
       <p>Let's</p>
@@ -123,20 +128,26 @@
   </div>
 
   <script>
+    // QUERYING ALL OF THE ELEMENTS WITH THE CLASS OF .PANEL 
     const panels = document.querySelectorAll('.panel');
 
+    // THIS IS US TARGETING THE OPEN 
     function toggleOpen() {
       console.log('Hello');
+      // RETURNS THE ATTRIBUTES OF THE ELEMENTS WITH A FOCUS OF TOGGLE TO TARGET THE OPEN CLASS
       this.classList.toggle('open');
     }
 
+    // LOOK FOR AN EVENT OF TOGGLE VIA TOGGLE ACTIVE
     function toggleActive(e) {
       console.log(e.propertyName);
+    // IF FLEX IS IN THE NAME THEN USE THE CLASS OF OPEN ACTIVE WHEN THE EVEN IS RECOGNIZED
       if (e.propertyName.includes('flex')) {
         this.classList.toggle('open-active');
       }
     }
 
+    // USING THE QUERY OF PANEL TO LISTEN FOR THE EVENT CLICK AND THE DAISY CHAINED EVENT OF
     panels.forEach(panel => panel.addEventListener('click', toggleOpen));
     panels.forEach(panel => panel.addEventListener('transitionend', toggleActive));
   </script>
