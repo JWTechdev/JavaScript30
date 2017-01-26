@@ -15,13 +15,21 @@
     </ul>
   </form>
 <script>
+// USING OUR ENDPOINT CONST TO POINT TO BRING IN A JSON FILE WITH OUR DATA
 const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
 
+// WE HAVE MADE A EMPTY ARRAY TO SO THAT WE CAN USE WHAT WE PARSE IN A LIST
+// WE ARE SUING FETCH TO RETURN A BLOB OF DATA AND THEN FORMATTING IT TO JSON
+// WE THEN SPREAD THE DATA APRT AND PUSH IT INTO METHOD
 const cities = [];
 fetch(endpoint)
   .then(blob => blob.json())
   .then(data => cities.push(...data));
 
+// NOW WE ARE PASSING TWO ARGUMENTS BASED ON THE USER INPUT AND THE INFORMATION WE HAVE
+// WE ARE THEN FILTERING DOWN THAT DATA INTO A FUNCTION CALLED PLACE
+// PLACE THEN USES A CONST REGULAR EXPRESSION FOR ALL MATCHES AND THEN DOES DESCRIMINATE AGAINST CASE SENSITIVITY
+// WE THEN RETURN OUR MATCH THAT CONTAINS CHARCHTERS THAT MATCH OUR CIT OR STATE
 function findMatches(wordToMatch, cities) {
   return cities.filter(place => {
     // here we need to figure out if the city or state matches what was searched
@@ -30,10 +38,16 @@ function findMatches(wordToMatch, cities) {
   });
 }
 
+// THIS IS A STOLEN FUNCTION TO ADD COMMA TO OUR NUMBERS WITHIN THE SEARCH
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
+// ONCE WE DID ALL DAT WE CAN NOW DISPLAY THE INFO TO THE USER
+// WE THEN USE MAP TO USING THE DATA WITHIN OUR HTML
+// THEN WE OUR REGULAR EXPRESSIONS AND SWAP OUT THE DATA AND ADD A SPAN AROUND THEM FOR HIGHLIGHTING
+// THEN WE USE .JOIN TO COMBINE EVEYRTHING IN OUR ARRAY
+// THEN WE TARGET THE SUGGESTIONS CLASS WITHIN OUR HTML
 function displayMatches() {
   const matchArray = findMatches(this.value, cities);
   const html = matchArray.map(place => {
@@ -50,9 +64,11 @@ function displayMatches() {
   suggestions.innerHTML = html;
 }
 
+// WE CUE UP OUR QUERY SELECTORS TO TARGET CERTAIN CRITERIA
 const searchInput = document.querySelector('.search');
 const suggestions = document.querySelector('.suggestions');
 
+// THEN WE LISTEN FOR THE ACTIONS BASED ON THE QUERY CRITERIA
 searchInput.addEventListener('change', displayMatches);
 searchInput.addEventListener('keyup', displayMatches);
 
